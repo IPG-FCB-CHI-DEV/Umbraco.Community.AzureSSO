@@ -36,7 +36,7 @@ namespace Umbraco.Cms.Core.DependencyInjection
 										OnRedirectToIdentityProvider = async ctxt =>
 										{
 
-											ctxt.ProtocolMessage.RedirectUri = "https://example.org/signin-oidc";
+											ctxt.ProtocolMessage.RedirectUri = azureSsoConfiguration.RedirectUriOverride;
 											await Task.Yield();
 										}
 

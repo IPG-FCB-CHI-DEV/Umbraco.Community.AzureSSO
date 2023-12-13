@@ -29,5 +29,7 @@ namespace Umbraco.Community.AzureSSO
 		public TokenCacheType TokenCacheType { get; set; } = TokenCacheType.InMemory;
 	
     public bool? AutoRedirectLoginToExternalProvider { get; set; }
+
+		public string? RedirectUriOverride { get; set; }
   }
 }
