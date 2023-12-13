@@ -1,4 +1,5 @@
 using System;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -29,7 +30,17 @@ namespace Umbraco.Cms.Core.DependencyInjection
 								{
 									builder.Config.Bind(AzureSSOConfiguration.AzureSsoCredentialSectionName, options);
 									options.SignInScheme = backOfficeAuthenticationBuilder.SchemeForBackOffice(MicrosoftAccountBackOfficeExternalLoginProviderOptions.SchemeName);
-									options.Events = new OpenIdConnectEvents();
+									options.Events = new OpenIdConnectEvents
+
+										{
+										OnRedirectToIdentityProvider = async ctxt =>
+										{
+
+											ctxt.ProtocolMessage.RedirectUri = "https://example.org/signin-oidc";
+											await Task.Yield();
+										}
+
+										};
 								},
 								options => { builder.Config.Bind(AzureSSOConfiguration.AzureSsoCredentialSectionName, options); },
 								displayName: azureSsoConfiguration.DisplayName ?? "Azure Active Directory",
